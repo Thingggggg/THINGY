@@ -28,7 +28,6 @@ body{
   flex-direction:column;
   align-items:center;
   padding:20px;
-  transition:0.3s;
 }
 
 .jukebox.chill{ box-shadow:0 0 40px #00f0ff; }
@@ -61,24 +60,11 @@ button{
   background:#111;
   color:white;
   cursor:pointer;
-  font-size:16px;
 }
 
 button:hover{
   background:#222;
   transform:scale(1.1);
-}
-
-.note{
-  position:absolute;
-  font-size:20px;
-  animation:float 2s linear infinite;
-  opacity:0.8;
-}
-
-@keyframes float{
-  0%{transform:translateY(0);opacity:1;}
-  100%{transform:translateY(-120px);opacity:0;}
 }
 </style>
 </head>
@@ -86,7 +72,7 @@ button:hover{
 <body>
 
 <div class="jukebox chill" id="jukebox">
-  <div class="screen" id="title">1. Chill</div>
+  <div class="screen" id="title">Loading...</div>
 
   <div class="controls">
     <button onclick="prev()">⏮</button>
@@ -132,8 +118,7 @@ function loadSong(){
 }
 
 function playSong(){
-  audio.play().catch(()=>{});
-  spawnNotes();
+  audio.play();
 }
 
 function pauseSong(){
@@ -143,25 +128,11 @@ function pauseSong(){
 function next(){
   i = (i+1) % songs.length;
   loadSong();
-  setTimeout(playSong,100);
 }
 
 function prev(){
   i = (i-1+songs.length) % songs.length;
   loadSong();
-  setTimeout(playSong,100);
-}
-
-function spawnNotes(){
-  for(let j=0;j<6;j++){
-    let n = document.createElement("div");
-    n.className="note";
-    n.innerHTML="♪";
-    n.style.left = Math.random()*300 + "px";
-    n.style.top = "400px";
-    document.body.appendChild(n);
-    setTimeout(()=>n.remove(),2000);
-  }
 }
 
 loadSong();
